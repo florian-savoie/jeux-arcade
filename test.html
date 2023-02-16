@@ -1,0 +1,152 @@
+<script>
+
+let score = 890;
+let pseudo = "gims22";
+var d = new Date();
+var date = d.getDate()+'-'+(d.getMonth()+1)+'-'+d.getFullYear();
+console.log(date);
+//finboucle = false ;
+
+
+  function veriftop() {
+    let monnouvelindex = -1 ;
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "voirtableauscore.php");
+    xhttp.send();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        resultatscore = this.responseText;
+        const lignes = resultatscore.split(`\n`);
+        console.log(lignes);
+        for (n = 0; n < lignes.length - 1; n++) {
+          const valeur = lignes[n].split(`;`);
+          console.log("mon id " + n + "score" + valeur[1])
+          if (score > valeur[1]) {
+            console.log(n + ' mon score ' + score + " est superieur a " + valeur[1]);
+            if (score > valeur[1] && n < 5) {
+              console.log("vous etes dans le top 5");
+              console.log(n);
+              monnouvelindex = n-1;
+              break ;
+             // finboucle = true ;
+             }
+            }
+          }
+          //supprime le derniere element du tableau
+          console.log(monnouvelindex+"l'index a modifier est le ")
+          lignes.pop();
+          //insere mon nouveau hight score au tableau a l'index 3
+          lignes.splice(monnouvelindex,0,pseudo+";"+score+";"+date);
+          console.log(lignes);
+          const csv = lignes.join("\n").replace(/;/g, ";");
+          console.log(csv);
+          var xhttp = new XMLHttpRequest();
+    
+    //   document.getElementById('info').innerHTML = '';
+   
+       xhttp.open("POST", "nouveaucsv.php");
+       xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+       xhttp.send(`csv=`+csv);
+       xhttp.onreadystatechange = function() {
+           if (this.readyState == 4 && this.status == 200)
+           {
+               var str = this.responseText;
+               alert(str);
+           }
+       };
+        }
+      };
+    }
+  
+
+
+/*
+const mm        = document.getElementById("demo");
+
+const tableauscore =`florian;1000;16/02/2023
+hhhh;800;16/02/2023
+gggg;500;16/02/2023
+fff;400;16/02/2023
+ffff;300;16/02/2023`;
+let score = 900 ;
+const scoreatrier = [];
+const lignes = tableauscore.split(`\n`);
+for (n = 0; n < lignes.length-1; n++ ){
+  const valeur = lignes[n].split(`;`);
+  console.log(valeur[1])
+  if (score > valeur[1]){
+    console.log(n+' mon score '+score+" est superieur a "+ valeur[1]);
+  }
+ //scoreatrier.push(valeur[1]);
+}
+
+//console.log(scoreatrier);
+//let triescore = score.sort();
+const byValue = (b,a) => a - b;
+const sorted = [...scoreatrier].sort(byValue);
+//console.log(sorted);
+
+
+
+
+// Ne conserver que les 10 meilleurs joueurs
+const top10 = sorted.slice(0, 10);
+
+
+console.log(top10);
+*/
+/*
+
+function loadDoc(){
+
+const lignes = tableauscore.split(`\n`);
+         let strTableHTML = ` <table class="table table-dark table-hover">\n\n`+
+         "<thead>"+
+        "<tr>"+
+        "<th>Pseudo</th>"+
+        "<th>SCORE</th>"+
+        "<th>x</th>"+
+        "</tr>"+
+        "</thead>"+
+        "<tbody>";
+        for (n = 0; n < lignes.length-1; n++ ){
+          console.log(lignes[n]);
+          const etudiant = lignes[n].split(`;`);
+          //console.log(etudiant[0]);
+          strTableHTML += `<tr>\n`+
+          `\t<td>`+etudiant[0]+`</td>\n`+
+          `\t<td>`+etudiant[1]+`</td>\n`+
+          `\t<td>`+etudiant[2]+`</td>\n`+
+          `</tr>\n\n`;
+         }
+           strTableHTML += `<tbody></table>\n`;
+                      console.log(strTableHTML);
+                   //   mm.innerHTML = "ableHTML" ;
+
+        }*/
+  </script>
+  
+  <!DOCTYPE html>
+  <html>
+  
+  <head>
+    <title>tableau json v1</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+  
+    </style>
+  
+  </head>
+  
+  <body >
+    <button onclick="veriftop()">test</button>
+    <div id="demo" class="d-flex justify-content-center mt-5 container">
+  
+    </div>
+  
+  </body>
+  
+  </html>
