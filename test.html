@@ -1,7 +1,7 @@
 <script>
 
-let score = 890;
-let pseudo = "gims22";
+let score = 880;
+let pseudo = "trois";
 var d = new Date();
 var date = d.getDate()+'-'+(d.getMonth()+1)+'-'+d.getFullYear();
 console.log(date);
@@ -19,6 +19,7 @@ console.log(date);
         const lignes = resultatscore.split(`\n`);
         console.log(lignes);
         for (n = 0; n < lignes.length - 1; n++) {
+          if ( monnouvelindex<0 ){
           const valeur = lignes[n].split(`;`);
           console.log("mon id " + n + "score" + valeur[1])
           if (score > valeur[1]) {
@@ -27,13 +28,12 @@ console.log(date);
               console.log("vous etes dans le top 5");
               console.log(n);
               monnouvelindex = n-1;
-              break ;
-             // finboucle = true ;
              }
-            }
+            }}
           }
           //supprime le derniere element du tableau
-          console.log(monnouvelindex+"l'index a modifier est le ")
+          console.log(monnouvelindex+"l'index a modifier est le ");
+          console.log(monnouvelindex);
           lignes.pop();
           //insere mon nouveau hight score au tableau a l'index 3
           lignes.splice(monnouvelindex,0,pseudo+";"+score+";"+date);
